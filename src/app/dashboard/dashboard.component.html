@@ -1,0 +1,79 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Item Management Dashboard</h2>
+  
+    <!-- Add Item Form -->
+    <div class="card mb-4">
+      <div class="card-header bg-primary text-white">Add Item</div>
+      <div class="card-body">
+        <form [formGroup]="addItemForm" (ngSubmit)="onAddItem()">
+          <div class="mb-3">
+            <label for="addItem" class="form-label">Item Name</label>
+            <input
+              type="text"
+              id="addItem"
+              formControlName="itemName"
+              class="form-control"
+              [ngClass]="{'is-invalid': addItemForm.get('itemName')?.touched && addItemForm.get('itemName')?.invalid}"
+            />
+            <div class="invalid-feedback">Item Name is required.</div>
+          </div>
+          <button type="submit" class="btn btn-success" [disabled]="addItemForm.invalid">
+            Add Item
+          </button>
+        </form>
+      </div>
+    </div>
+  
+    <!-- Items List -->
+    <div class="card mb-4">
+      <div class="card-header bg-secondary text-white">Items List</div>
+      <div class="card-body">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Item Name</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of getmethod">
+              <td>{{ item.id }}</td>
+              <td>{{ item.name }}</td>
+              <td>
+                <button class="btn btn-warning btn-sm me-2" (click)="onEditItem(item)">Edit</button>
+                <button class="btn btn-danger btn-sm" (click)="deleteitems(item.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <!-- Edit Item Form -->
+    <div *ngIf="selectedItem" class="card mb-4">
+      <div class="card-header bg-info text-white">Edit Item</div>
+      <div class="card-body">
+        <form [formGroup]="editItemForm" (ngSubmit)="onUpdateItem()">
+          <div class="mb-3">
+            <label for="editItem" class="form-label">Item Name</label>
+            <input
+              type="text"
+              id="editItem"
+              formControlName="itemName"
+              class="form-control"
+              [ngClass]="{'is-invalid': editItemForm.get('itemName')?.touched && editItemForm.get('itemName')?.invalid}"
+            />
+            <div class="invalid-feedback">Item Name is required.</div>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="editItemForm.invalid">
+            Update Item
+          </button>
+          <button type="button" class="btn btn-secondary ms-2" (click)="cancelEdit()">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {{ username }}
+  
