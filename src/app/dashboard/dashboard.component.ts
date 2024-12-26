@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
 
 
 
-  constructor(private fb: FormBuilder, private madhu: ApiService) {
+  constructor(private fb: FormBuilder, private madhu: ApiService, private kumar:ApiService) {
     this.addItemForm = this.fb.group({
       itemName: ['', Validators.required],
     });
@@ -26,9 +26,23 @@ export class DashboardComponent implements OnInit {
       itemName: ['', Validators.required],
     });
   }
+  
+  obser1:any;
+  obser(){
+    this.madhu.Observable$.subscribe(res=>{
+      console.log(res,"this observable");
+      this.obser1=res;
+    })
+  }
+  save:any;
+  savedata(){
+    this.madhu.Observable$.next(this.save);
+  }
+
 
   ngOnInit() {
     this.getitems();
+    this.obser();
   }
 
   getitems() {
@@ -49,15 +63,6 @@ export class DashboardComponent implements OnInit {
     this.selectedItem = item;
     this.editItemForm.patchValue({ itemName: item.name });
   }
-
-  // onUpdateItem() {
-  //   const updatedItem = { name: this.editItemForm.value.itemName };
-  //   this.madhu.putusers(this.selectedItem.id, updatedItem).subscribe(() => {
-  //     this.getitems();
-  //     this.selectedItem = null;
-  //   });
-  // }
-
 
   onUpdateItem() {
     if (this.selectedItem && typeof this.selectedItem.id === 'string') {
@@ -81,6 +86,5 @@ export class DashboardComponent implements OnInit {
       this.getitems();
     });
   }
-  isenable:boolean=true;
-  username:string =`Pandukumar ${this.isenable? "Angular" : "React"}  Developer`
+
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 export class ApiService {
 
   jsonurl:string= "http://localhost:3000/users";
+
+  Observable$= new BehaviorSubject("This is Observable concept");
 
   constructor(private http:HttpClient) { }
 
@@ -22,11 +24,6 @@ export class ApiService {
   putusers(id: any, data: { name: string }): Observable<any> {
     return this.http.put(`${this.jsonurl}/${id}`, data);
   }
-  
-  // putusers(updatedItem:any,id:number){
-  //   return this.http.put(`${this.jsonurl}${id}`,updatedItem);
-  // }
-
   deleteusers(id:any){
     return this.http.delete(`${this.jsonurl}/${id}`);
   }
